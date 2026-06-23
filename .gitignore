@@ -1,2 +1,4 @@
-"tailwindcss.exe" 
-"eco_env/" 
+tailwindcss.exe
+eco_env/
+db.sqlite3
+media/
