@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView
+from django.views.generic import DetailView
 from django.urls import reverse_lazy
 from .models import Product
 from .forms import product_form,CustomerRegistrationForm
@@ -43,3 +44,8 @@ class customer_register_view(CreateView):
     form_class=CustomerRegistrationForm
     template_name='store/register.html'
     success_url=reverse_lazy('login')
+
+class ProductDetailView(DetailView):
+    model = Product
+    template_name = 'store/product_detail.html'
+    context_object_name = 'book'

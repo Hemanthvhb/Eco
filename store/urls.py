@@ -1,6 +1,6 @@
 from django.urls import path
 from django.contrib.auth.views import LogoutView
-from .views import ProductCreateView, product_list, unified_login_view, seller_dashboard,customer_register_view
+from .views import ProductCreateView, product_list, unified_login_view, seller_dashboard,customer_register_view,ProductDetailView
 
 urlpatterns = [
     path('', product_list, name='product_list'),
@@ -10,4 +10,5 @@ urlpatterns = [
 
     path('add-product/', ProductCreateView.as_view(), name='add_product'),
     path('dashboard/', seller_dashboard, name='seller_dashboard'), 
+    path('product/<int:pk>/', ProductDetailView.as_view(), name='product_detail'),
 ]

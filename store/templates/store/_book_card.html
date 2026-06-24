@@ -1,0 +1,24 @@
+<a href="{% url 'product_detail' book.id %}" class="card-link" style="text-decoration: none; color: inherit; display: block;">
+    <div class="card" style="background: white; padding: 20px; border-radius: 8px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: transform 0.2s ease, box-shadow 0.2s ease; height: 100%; box-sizing: border-box;">
+        
+        {% if book.image %}
+            <img src="{{ book.image.url }}" alt="{{ book.name }}" style="max-width: 100%; height: 200px; object-fit: cover; border-radius: 4px;">
+        {% else %}
+            <div style="height: 200px; background: #eee; display: flex; align-items: center; justify-content: center; border-radius: 4px; color: #777; margin-bottom: 10px;">
+                No Cover Available
+            </div>
+        {% endif %}
+
+        <h3 style="margin: 10px 0 5px 0; font-size: 16px;">{{ book.name }}</h3>
+        <p style="margin: 5px 0; font-weight: bold; color: #046f31;">Price: ${{ book.price }}</p>
+        <p style="margin: 5px 0; font-size: 13px; color: #666;">Stock left: {{ book.stock_left }}</p>
+    </div>
+</a>
+
+<style>
+    /* Subtle hover effect on the card component */
+    .card-link:hover .card {
+        transform: translateY(-4px);
+        box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+    }
+</style>

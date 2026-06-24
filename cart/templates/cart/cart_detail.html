@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Shopping Cart</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; background-color: #35ecd7; }
+        .cart-container { max-width: 800px; margin: 0 auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        h1 { color: #333; margin-top: 0; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+        .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; border-bottom: 1px solid #eee; }
+        .item-details { display: flex; align-items: center; gap: 15px; }
+        .item-img { width: 60px; height: 80px; object-fit: cover; border-radius: 4px; }
+        .no-img { width: 60px; height: 80px; background: #eee; display: flex; align-items: center; justify-content: center; font-size: 10px; color: #777; text-align: center; border-radius: 4px; }
+        .item-info h3 { margin: 0 0 5px 0; font-size: 18px; color: #333; }
+        .item-info p { margin: 0; color: #666; font-size: 14px; }
+        .remove-btn { background-color: #cc0000; color: white; padding: 8px 12px; border: none; border-radius: 4px; font-weight: bold; font-size: 13px; cursor: pointer; transition: background 0.2s; }
+        .remove-btn:hover { background-color: #a30000; }
+        .cart-summary { margin-top: 25px; padding-top: 20px; border-top: 2px solid #eee; display: flex; justify-content: space-between; align-items: center; }
+        .total-price { font-size: 22px; font-weight: bold; color: #046f31; }
+        .btn-group { display: flex; gap: 15px; }
+        .back-btn { background-color: #6b7280; color: white; padding: 12px 20px; border-radius: 4px; text-decoration: none; font-weight: bold; font-size: 15px; }
+        .back-btn:hover { background-color: #4b5563; }
+        .checkout-btn { background-color: #046f31; color: white; padding: 12px 25px; border-radius: 4px; text-decoration: none; font-weight: bold; font-size: 15px; }
+        .checkout-btn:hover { background-color: #035425; }
+        .empty-message { text-align: center; padding: 40px 0; color: #666; }
+    </style>
+</head>
+<body>
+
+    <div class="cart-container">
+        <h1>Your Shopping Cart</h1>
+
+        {% if cart.items.all %}
+            {% for item in cart.items.all %}
+                <div class="cart-item">
+                    <div class="item-details">
+                        {% if item.product.image %}
+                            <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" class="item-img">
+                        {% else %}
+                            <div class="no-img">No Cover</div>
+                        {% endif %}
+                        <div class="item-info">
+                            <h3>{{ item.product.name }}</h3>
+                            <p>Price: ${{ item.product.price }} | Quantity: {{ item.quantity }}</p>
+                            <p style="font-weight: bold; margin-top: 4px; color: #333;">Subtotal: ${{ item.subtotal }}</p>
+                        </div>
+                    </div>
+                    
+                    <form method="POST" action="{% url 'remove_from_cart' item.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="remove-btn">Remove</button>
+                    </form>
+                </div>
+            {% endfor %}
+
+            <div class="cart-summary">
+                <div>
+                    <span style="font-size: 16px; color: #555;">Estimated Total:</span>
+                    <div class="total-price">${{ cart.total_price }}</div>
+                </div>
+                <div class="btn-group">
+                    <a href="{% url 'product_list' %}" class="back-btn">Continue Shopping</a>
+                    <a href="#" class="checkout-btn">Proceed to Checkout</a>
+                </div>
+            </div>
+        {% else %}
+            <div class="empty-message">
+                <p style="font-size: 18px; margin-bottom: 20px;">Your cart is currently empty.</p>
+                <a href="{% url 'product_list' %}" class="checkout-btn">Browse Books</a>
+            </div>
+        {% endif %}
+    </div>
+
+</body>
+</html>
