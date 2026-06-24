@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Customer Registration</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #35ecd7; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+        .register-container { background: white; padding: 40px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); width: 100%; max-width: 400px; box-sizing: border-box; margin: 20px 0; }
+        h2 { text-align: center; color: #333; margin-bottom: 25px; }
+        
+        /* Form Field Styling */
+        .form-group { margin-bottom: 18px; }
+        .form-group label { display: block; font-weight: bold; margin-bottom: 5px; color: #444; font-size: 14px; }
+        .form-group input { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-size: 14px; }
+        .form-group input:focus { border-color: #046f31; outline: none; }
+        
+        .helptext, .form-group span.helptext { display: none !important; }
+        
+        .errorlist { display: block !important; color: #cc0000; list-style: none; padding: 0; margin: 5px 0 0 0; font-size: 13px; font-weight: bold; }
+        .errorlist li { margin-bottom: 2px; }
+        /* Error Styling */
+        .errorlist { display: block !important; color: #cc0000; list-style: none; padding: 0; margin: 5px 0 0 0; font-size: 13px; font-weight: bold; }
+        .global-errors { background-color: #ffe6e6; color: #cc0000; padding: 12px; border-radius: 4px; margin-bottom: 20px; font-size: 14px; }
+
+        .btn { background: #046f31; color: white; padding: 12px 20px; border: none; border-radius: 4px; width: 100%; cursor: pointer; font-size: 16px; font-weight: bold; margin-top: 10px; }
+        .btn:hover { background: #035425; }
+        .login-link { display: block; text-align: center; margin-top: 20px; color: #046f31; text-decoration: none; font-size: 14px; }
+        .login-link:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+
+    <div class="register-container">
+        <h2>Create an Account</h2>
+        
+        <form method="POST">
+            {% csrf_token %}
+            
+            {% if form.non_field_errors %}
+                <div class="global-errors">
+                    {{ form.non_field_errors }}
+                </div>
+            {% endif %}
+
+            {% for field in form %}
+                <div class="form-group">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.errors %}
+                        {{ field.errors }}
+                    {% endif %}
+                </div>
+            {% endfor %}
+
+            <button type="submit" class="btn">Register</button>
+        </form>
+
+        <a href="{% url 'login' %}" class="login-link">Already have an account? Sign in</a>
+    </div>
+
+</body>
+</html>

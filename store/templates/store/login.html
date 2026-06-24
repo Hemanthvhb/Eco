@@ -9,7 +9,9 @@
         h2 { text-align: center; color: #333; margin-bottom: 20px; }
         .btn { background: #046f31; color: white; padding: 12px 20px; border: none; border-radius: 4px; width: 100%; cursor: pointer; font-size: 16px; font-weight: bold; margin-top: 10px; }
         .btn:hover { background: #035425; }
-        .errorlist { color: red; list-style: none; padding: 0; font-size: 14px; }
+        /* Style for the new signup link */
+        .register-link { display: block; text-align: center; margin-top: 15px; color: #046f31; text-decoration: none; font-size: 14px; }
+        .register-link:hover { text-decoration: underline; }
     </style>
 </head>
 <body>
@@ -22,6 +24,8 @@
             {{ form.as_p }}
             <button type="submit" class="btn">Login</button>
         </form>
+
+        <a href="{% url 'customer_register' %}" class="register-link">Don't have an account? Sign up here</a>
     </div>
 
 </body>

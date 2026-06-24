@@ -2,10 +2,13 @@ from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView
 from django.urls import reverse_lazy
 from .models import Product
-from .forms import product_form  
+from .forms import product_form,CustomerRegistrationForm
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 
+@login_required(login_url='login')
 def product_list(request):
     products = Product.objects.all()
     return render(request, 'store/product_list.html', {'products': products})
@@ -34,3 +37,9 @@ class unified_login_view(LoginView):  # Using your exact class name
 def seller_dashboard(request):
     books = Product.objects.all() 
     return render(request, 'store/seller_dashboard.html', {'books': books})
+
+class customer_register_view(CreateView):
+    model=User
+    form_class=CustomerRegistrationForm
+    template_name='store/register.html'
+    success_url=reverse_lazy('login')
